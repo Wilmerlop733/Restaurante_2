@@ -16,15 +16,15 @@ namespace Restaurante1
         {
             InitializeComponent();
             ApplyStyles();
-            
+
             LoadCategories();
-            
+
             this.btnSave.Click += BtnSave_Click;
             this.btnUpload.Click += BtnUpload_Click;
             this.btnClear.Click += BtnClear_Click;
             this.btnLoadSuggested.Click += BtnLoadSuggested_Click;
         }
-        
+
         private void ApplyStyles()
         {
             this.BackColor = StyleHelper.BackgroundColor;
@@ -36,13 +36,13 @@ namespace Restaurante1
             {
                 cmbCategory.Items.Clear();
                 cmbCategory.Items.Add("-- Seleccionar --");
-                
+
                 DataTable dt = DatabaseHelper.ExecuteQuery("SELECT idcategoria, nombrecat FROM categoria");
                 foreach (DataRow row in dt.Rows)
                 {
                     cmbCategory.Items.Add(new { Text = row["nombrecat"].ToString(), Value = row["idcategoria"] });
                 }
-                
+
                 cmbCategory.DisplayMember = "Text";
                 cmbCategory.ValueMember = "Value";
                 cmbCategory.SelectedIndex = 0;
@@ -69,20 +69,20 @@ namespace Restaurante1
 
         private void LoadImageSafe(string fullPath)
         {
-            try 
+            try
             {
-                if (picPreview.Image != null) 
+                if (picPreview.Image != null)
                 {
                     var oldImage = picPreview.Image;
                     picPreview.Image = null;
                     oldImage.Dispose();
                 }
-                
+
                 using (var temp = new Bitmap(fullPath))
                 {
                     picPreview.Image = new Bitmap(temp);
                 }
-                
+
                 _currentImagePath = fullPath;
             }
             catch (Exception ex)
@@ -143,11 +143,16 @@ namespace Restaurante1
             try
             {
                 dynamic selectedCat = cmbCategory.SelectedItem;
+                if (selectedCat == null)
+                {
+                    MessageBox.Show("Debe seleccionar una categoría válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 int categoryId = (int)selectedCat.Value;
 
                 string query = "INSERT INTO platos (nombreplato, descripcionplato, idcategoria, precio, niveldicultad, foto) " +
                                "VALUES (@nom, @desc, @cat, @pre, @dif, @foto)";
-                
+
                 MySqlParameter[] parameters = {
                     new MySqlParameter("@nom", txtName.Text),
                     new MySqlParameter("@desc", txtDesc.Text),
@@ -168,12 +173,12 @@ namespace Restaurante1
                 MessageBox.Show("No se pudo guardar el plato en la base de datos:\n" + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         private void BtnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
         }
-        
+
         private void BtnLoadSuggested_Click(object sender, EventArgs e)
         {
             if (cmbCategory.SelectedIndex <= 0)
@@ -186,7 +191,7 @@ namespace Restaurante1
             {
                 dynamic selectedCat = cmbCategory.SelectedItem;
                 string catName = selectedCat.Text.ToLower();
-                
+
                 string fileName = "";
                 if (catName.Contains("bebida")) fileName = "bebidas.jpg";
                 else if (catName.Contains("fuente") || catName.Contains("plato")) fileName = "platos fuertes.jpg";
@@ -195,7 +200,7 @@ namespace Restaurante1
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     string fullPath = System.IO.Path.Combine(Application.StartupPath, "Imag", fileName);
-                    
+
                     if (!System.IO.File.Exists(fullPath))
                     {
                         fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Imag", fileName);
@@ -231,6 +236,11 @@ namespace Restaurante1
             _currentImagePath = null;
             if (cmbCategory.Items.Count > 0) cmbCategory.SelectedIndex = 0;
             txtId.Text = "0000";
+        }
+
+        private void btnClear_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
