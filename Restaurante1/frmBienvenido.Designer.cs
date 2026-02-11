@@ -19,9 +19,7 @@ namespace Restaurante1
             lblWelcome = new Label();
             lblSubtitle = new Label();
             SuspendLayout();
-            // 
-            // lblWelcome
-            // 
+ 
             lblWelcome.AutoSize = true;
             lblWelcome.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             lblWelcome.ForeColor = Color.FromArgb(40, 50, 60);
@@ -31,9 +29,7 @@ namespace Restaurante1
             lblWelcome.TabIndex = 0;
             lblWelcome.Text = "Bienvenido al Sistema de Gestión";
             lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblSubtitle
-            // 
+
             lblSubtitle.AutoSize = true;
             lblSubtitle.Font = new Font("Segoe UI", 14F);
             lblSubtitle.ForeColor = Color.Gray;
@@ -43,9 +39,7 @@ namespace Restaurante1
             lblSubtitle.TabIndex = 1;
             lblSubtitle.Text = "Seleccione una opción del menú lateral para comenzar";
             lblSubtitle.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // frmBienvenido
-            // 
+
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1176, 1067);

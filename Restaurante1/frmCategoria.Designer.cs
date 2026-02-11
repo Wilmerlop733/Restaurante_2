@@ -58,9 +58,7 @@ namespace Restaurante1
             rightPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridCategories).BeginInit();
             SuspendLayout();
-            // 
-            // leftPanel
-            // 
+         
             leftPanel.BackColor = Color.White;
             leftPanel.Controls.Add(lblHeaderLeft);
             leftPanel.Controls.Add(lblId);
@@ -78,9 +76,7 @@ namespace Restaurante1
             leftPanel.Name = "leftPanel";
             leftPanel.Size = new Size(457, 667);
             leftPanel.TabIndex = 0;
-            // 
-            // lblHeaderLeft
-            // 
+           
             lblHeaderLeft.AutoSize = true;
             lblHeaderLeft.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblHeaderLeft.ForeColor = Color.FromArgb(50, 50, 50);
@@ -89,9 +85,7 @@ namespace Restaurante1
             lblHeaderLeft.Size = new Size(123, 31);
             lblHeaderLeft.TabIndex = 0;
             lblHeaderLeft.Text = "Categoría ";
-            // 
-            // lblId
-            // 
+           
             lblId.Font = new Font("Segoe UI", 10F);
             lblId.ForeColor = Color.FromArgb(50, 50, 50);
             lblId.Location = new Point(23, 80);
@@ -99,9 +93,7 @@ namespace Restaurante1
             lblId.Size = new Size(114, 31);
             lblId.TabIndex = 1;
             lblId.Text = "ID Categoría:";
-            // 
-            // txtId
-            // 
+           
             txtId.BackColor = Color.WhiteSmoke;
             txtId.BorderStyle = BorderStyle.FixedSingle;
             txtId.Font = new Font("Segoe UI", 10F);
@@ -112,9 +104,7 @@ namespace Restaurante1
             txtId.Size = new Size(263, 30);
             txtId.TabIndex = 2;
             txtId.Text = "0000";
-            // 
-            // lblName
-            // 
+            
             lblName.Font = new Font("Segoe UI", 10F);
             lblName.ForeColor = Color.FromArgb(50, 50, 50);
             lblName.Location = new Point(23, 133);
@@ -122,9 +112,7 @@ namespace Restaurante1
             lblName.Size = new Size(114, 31);
             lblName.TabIndex = 3;
             lblName.Text = "Nombre:";
-            // 
-            // txtName
-            // 
+            
             txtName.BackColor = Color.WhiteSmoke;
             txtName.BorderStyle = BorderStyle.FixedSingle;
             txtName.Font = new Font("Segoe UI", 10F);
@@ -133,9 +121,7 @@ namespace Restaurante1
             txtName.Name = "txtName";
             txtName.Size = new Size(263, 30);
             txtName.TabIndex = 4;
-            // 
-            // lblDesc
-            // 
+             
             lblDesc.Font = new Font("Segoe UI", 10F);
             lblDesc.ForeColor = Color.FromArgb(50, 50, 50);
             lblDesc.Location = new Point(23, 187);
@@ -143,9 +129,7 @@ namespace Restaurante1
             lblDesc.Size = new Size(114, 31);
             lblDesc.TabIndex = 5;
             lblDesc.Text = "Descripción:";
-            // 
-            // txtDesc
-            // 
+             
             txtDesc.BackColor = Color.WhiteSmoke;
             txtDesc.BorderStyle = BorderStyle.FixedSingle;
             txtDesc.Font = new Font("Segoe UI", 10F);
@@ -155,9 +139,7 @@ namespace Restaurante1
             txtDesc.Name = "txtDesc";
             txtDesc.Size = new Size(263, 133);
             txtDesc.TabIndex = 6;
-            // 
-            // lblManager
-            // 
+            
             lblManager.Font = new Font("Segoe UI", 10F);
             lblManager.ForeColor = Color.FromArgb(50, 50, 50);
             lblManager.Location = new Point(23, 347);
@@ -165,9 +147,7 @@ namespace Restaurante1
             lblManager.Size = new Size(114, 31);
             lblManager.TabIndex = 7;
             lblManager.Text = "Encargado:";
-            // 
-            // cmbManager
-            // 
+            
             cmbManager.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbManager.Items.AddRange(new object[] { "María González", "Ana López", "Carlos Ruiz" });
             cmbManager.Location = new Point(171, 347);
@@ -175,9 +155,7 @@ namespace Restaurante1
             cmbManager.Name = "cmbManager";
             cmbManager.Size = new Size(262, 28);
             cmbManager.TabIndex = 8;
-            // 
-            // btnSave
-            // 
+           
             btnSave.BackColor = Color.FromArgb(76, 175, 80);
             btnSave.Cursor = Cursors.Hand;
             btnSave.FlatAppearance.BorderSize = 0;
@@ -192,9 +170,7 @@ namespace Restaurante1
             btnSave.Text = "Guardar";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click_1;
-            // 
-            // btnDelete
-            // 
+            
             btnDelete.BackColor = Color.FromArgb(244, 67, 54);
             btnDelete.Cursor = Cursors.Hand;
             btnDelete.FlatAppearance.BorderSize = 0;
@@ -209,9 +185,7 @@ namespace Restaurante1
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += BtnDelete_Click;
-            // 
-            // rightPanel
-            // 
+             
             rightPanel.BackColor = Color.White;
             rightPanel.Controls.Add(lblHeaderRight);
             rightPanel.Controls.Add(gridCategories);
@@ -220,9 +194,7 @@ namespace Restaurante1
             rightPanel.Name = "rightPanel";
             rightPanel.Size = new Size(513, 667);
             rightPanel.TabIndex = 1;
-            // 
-            // lblHeaderRight
-            // 
+          
             lblHeaderRight.AutoSize = true;
             lblHeaderRight.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblHeaderRight.ForeColor = Color.FromArgb(50, 50, 50);
@@ -231,9 +203,7 @@ namespace Restaurante1
             lblHeaderRight.Size = new Size(228, 28);
             lblHeaderRight.TabIndex = 0;
             lblHeaderRight.Text = "Categorías Registradas";
-            // 
-            // gridCategories
-            // 
+           
             gridCategories.AllowUserToAddRows = false;
             gridCategories.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridCategories.BackgroundColor = Color.White;
@@ -268,41 +238,31 @@ namespace Restaurante1
             gridCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             gridCategories.Size = new Size(467, 560);
             gridCategories.TabIndex = 1;
-            // 
-            // colId
-            // 
+           
             colId.FillWeight = 15F;
             colId.HeaderText = "ID";
             colId.MinimumWidth = 6;
             colId.Name = "colId";
             colId.ReadOnly = true;
-            // 
-            // colName
-            // 
+         
             colName.FillWeight = 25F;
             colName.HeaderText = "Nombre";
             colName.MinimumWidth = 6;
             colName.Name = "colName";
             colName.ReadOnly = true;
-            // 
-            // colDesc
-            // 
+        
             colDesc.FillWeight = 40F;
             colDesc.HeaderText = "Descripción";
             colDesc.MinimumWidth = 6;
             colDesc.Name = "colDesc";
             colDesc.ReadOnly = true;
-            // 
-            // colMan
-            // 
+            
             colMan.FillWeight = 25F;
             colMan.HeaderText = "Encargado";
             colMan.MinimumWidth = 6;
             colMan.Name = "colMan";
             colMan.ReadOnly = true;
-            // 
-            // frmCategoria
-            // 
+             
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1129, 800);
