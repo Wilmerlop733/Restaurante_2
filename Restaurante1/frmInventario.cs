@@ -14,6 +14,7 @@ namespace Restaurante1
             try 
             {
                 InitializeComponent();
+                FixDatabaseSchema();
                 ApplyStyles();
                 LoadInventoryData();
 
@@ -31,6 +32,25 @@ namespace Restaurante1
         private void ApplyStyles()
         {
             this.BackColor = StyleHelper.BackgroundColor;
+        }
+
+        private void FixDatabaseSchema()
+        {
+            try
+            {
+                // Verificamos si la columna existe
+                DataTable schema = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'stock'");
+                if (schema.Rows.Count == 0)
+                {
+                    // Si no existe, la creamos
+                    DatabaseHelper.ExecuteNonQuery("ALTER TABLE ingredientes ADD COLUMN stock DECIMAL(10,2) DEFAULT 0 AFTER encargadoingre");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Solo registramos en consola si falla, para no interrumpir al usuario si ya existe por alguna razón
+                Console.WriteLine("Error al verificar/actualizar esquema de base de datos: " + ex.Message);
+            }
         }
 
         private void LoadInventoryData()
@@ -154,34 +174,27 @@ namespace Restaurante1
             }
             catch { }
 
-            bool hasStockColumn = false;
-            try {
-                DataTable schema = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'stock'");
-                hasStockColumn = schema.Rows.Count > 0;
-            } catch { }
-
-            string query;
-            if (hasStockColumn)
+            try
             {
-                query = "INSERT INTO ingredientes (nombreingre, descipcioningre, encargadoingre, stock) VALUES (@nom, @desc, @enc, @stock)";
+                string query = "INSERT INTO ingredientes (nombreingre, descipcioningre, encargadoingre, stock) VALUES (@nom, @desc, @enc, @stock)";
+
+                MySqlParameter[] parameters = {
+                    new MySqlParameter("@nom", txtName.Text),
+                    new MySqlParameter("@desc", txtDesc.Text),
+                    new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
+                    new MySqlParameter("@stock", numStock.Value)
+                };
+
+                if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+                {
+                    MessageBox.Show("El ingrediente se ha registrado exitosamente en el inventario.", "Ingrediente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearForm();
+                    LoadInventoryData();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                query = "INSERT INTO ingredientes (nombreingre, descipcioningre, encargadoingre) VALUES (@nom, @desc, @enc)";
-            }
-
-            MySqlParameter[] parameters = {
-                new MySqlParameter("@nom", txtName.Text),
-                new MySqlParameter("@desc", txtDesc.Text),
-                new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
-                new MySqlParameter("@stock", numStock.Value)
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
-            {
-                MessageBox.Show("El ingrediente se ha registrado exitosamente en el inventario.", "Ingrediente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearForm();
-                LoadInventoryData();
+                MessageBox.Show("Error al guardar el ingrediente: " + ex.Message, "Error de Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -228,37 +241,29 @@ namespace Restaurante1
             }
             catch { }
 
-            string idPart = txtId.Text.Replace("ING-", "");
-
-            bool hasStockColumn = false;
-            try {
-                DataTable schema = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'stock'");
-                hasStockColumn = schema.Rows.Count > 0;
-            } catch { }
-
-            string query;
-            if (hasStockColumn)
+            try
             {
-                query = "UPDATE ingredientes SET nombreingre=@nom, descipcioningre=@desc, encargadoingre=@enc, stock=@stock WHERE idingredientes=@id";
+                string idPart = txtId.Text.Replace("ING-", "");
+                string query = "UPDATE ingredientes SET nombreingre=@nom, descipcioningre=@desc, encargadoingre=@enc, stock=@stock WHERE idingredientes=@id";
+
+                MySqlParameter[] parameters = {
+                    new MySqlParameter("@nom", txtName.Text),
+                    new MySqlParameter("@desc", txtDesc.Text),
+                    new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
+                    new MySqlParameter("@stock", numStock.Value),
+                    new MySqlParameter("@id", int.Parse(idPart))
+                };
+
+                if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+                {
+                    MessageBox.Show("Los datos del ingrediente han sido actualizados correctamente.", "Actualización Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearForm();
+                    LoadInventoryData();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                query = "UPDATE ingredientes SET nombreingre=@nom, descipcioningre=@desc, encargadoingre=@enc WHERE idingredientes=@id";
-            }
-
-            MySqlParameter[] parameters = {
-                new MySqlParameter("@nom", txtName.Text),
-                new MySqlParameter("@desc", txtDesc.Text),
-                new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
-                new MySqlParameter("@stock", numStock.Value),
-                new MySqlParameter("@id", int.Parse(idPart))
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
-            {
-                MessageBox.Show("Los datos del ingrediente han sido actualizados correctamente.", "Actualización Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearForm();
-                LoadInventoryData();
+                MessageBox.Show("Error al actualizar el ingrediente: " + ex.Message, "Error de Base de Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
