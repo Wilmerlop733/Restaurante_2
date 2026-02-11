@@ -117,4 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Gestione sus platos, categorías e inventario de manera eficiente. Utilice el menú lateral para navegar por las diferentes secciones del sistema.
+
+Estamos listos para ayudarle a optimizar su servicio hoy.</value>
+  </data>
 </root>

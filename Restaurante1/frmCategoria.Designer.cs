@@ -58,7 +58,7 @@ namespace Restaurante1
             rightPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridCategories).BeginInit();
             SuspendLayout();
-         
+          
             leftPanel.BackColor = Color.White;
             leftPanel.Controls.Add(lblHeaderLeft);
             leftPanel.Controls.Add(lblId);
@@ -76,7 +76,7 @@ namespace Restaurante1
             leftPanel.Name = "leftPanel";
             leftPanel.Size = new Size(457, 667);
             leftPanel.TabIndex = 0;
-           
+            
             lblHeaderLeft.AutoSize = true;
             lblHeaderLeft.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblHeaderLeft.ForeColor = Color.FromArgb(50, 50, 50);
@@ -85,7 +85,7 @@ namespace Restaurante1
             lblHeaderLeft.Size = new Size(123, 31);
             lblHeaderLeft.TabIndex = 0;
             lblHeaderLeft.Text = "Categoría ";
-           
+            
             lblId.Font = new Font("Segoe UI", 10F);
             lblId.ForeColor = Color.FromArgb(50, 50, 50);
             lblId.Location = new Point(23, 80);
@@ -93,7 +93,7 @@ namespace Restaurante1
             lblId.Size = new Size(114, 31);
             lblId.TabIndex = 1;
             lblId.Text = "ID Categoría:";
-           
+            
             txtId.BackColor = Color.WhiteSmoke;
             txtId.BorderStyle = BorderStyle.FixedSingle;
             txtId.Font = new Font("Segoe UI", 10F);
@@ -121,7 +121,7 @@ namespace Restaurante1
             txtName.Name = "txtName";
             txtName.Size = new Size(263, 30);
             txtName.TabIndex = 4;
-             
+              
             lblDesc.Font = new Font("Segoe UI", 10F);
             lblDesc.ForeColor = Color.FromArgb(50, 50, 50);
             lblDesc.Location = new Point(23, 187);
@@ -129,7 +129,7 @@ namespace Restaurante1
             lblDesc.Size = new Size(114, 31);
             lblDesc.TabIndex = 5;
             lblDesc.Text = "Descripción:";
-             
+              
             txtDesc.BackColor = Color.WhiteSmoke;
             txtDesc.BorderStyle = BorderStyle.FixedSingle;
             txtDesc.Font = new Font("Segoe UI", 10F);

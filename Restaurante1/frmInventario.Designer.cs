@@ -371,6 +371,7 @@ namespace Restaurante1
             statsPanel.ResumeLayout(false);
             statsPanel.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colName;
