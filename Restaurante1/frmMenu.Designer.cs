@@ -22,6 +22,7 @@ namespace Restaurante1
             btnNavInventory = new Button();
             btnNavCategories = new Button();
             btnNavDishes = new Button();
+            btnNavRecipes = new Button();
             pnlContent = new Panel();
             pnlHeader = new Panel();
             lblTitle = new Label();
@@ -35,6 +36,7 @@ namespace Restaurante1
             pnlSidebar.Controls.Add(btnNavInventory);
             pnlSidebar.Controls.Add(btnNavCategories);
             pnlSidebar.Controls.Add(btnNavDishes);
+            pnlSidebar.Controls.Add(btnNavRecipes);
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Location = new Point(0, 0);
             pnlSidebar.Margin = new Padding(3, 4, 3, 4);
@@ -89,6 +91,18 @@ namespace Restaurante1
             btnNavDishes.Text = "🍲 Platos";
             btnNavDishes.TextAlign = ContentAlignment.MiddleLeft;
             btnNavDishes.Click += btnNavDishes_Click;
+
+            // Recipe Button
+            btnNavRecipes.ForeColor = SystemColors.ControlLightLight;
+            btnNavRecipes.Location = new Point(0, 400);
+            btnNavRecipes.Margin = new Padding(3, 4, 3, 4);
+            btnNavRecipes.Name = "btnNavRecipes";
+            btnNavRecipes.Padding = new Padding(23, 0, 0, 0);
+            btnNavRecipes.Size = new Size(320, 67);
+            btnNavRecipes.TabIndex = 5;
+            btnNavRecipes.Text = "📝 Recetas";
+            btnNavRecipes.TextAlign = ContentAlignment.MiddleLeft;
+            btnNavRecipes.Click += btnNavRecipes_Click;
             pnlContent.BackColor = Color.FromArgb(245, 247, 251);
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Location = new Point(320, 80);
@@ -151,6 +165,7 @@ namespace Restaurante1
         private System.Windows.Forms.Button btnNavInventory;
         private System.Windows.Forms.Button btnNavCategories;
         private System.Windows.Forms.Button btnNavDishes;
+        private System.Windows.Forms.Button btnNavRecipes;
         private System.Windows.Forms.Label lblAppName;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblUser;

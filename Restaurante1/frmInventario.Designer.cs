@@ -13,11 +13,6 @@ namespace Restaurante1
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblNameHint;
-        private System.Windows.Forms.Label lblDesc;
-        private System.Windows.Forms.TextBox txtDesc;
-        private System.Windows.Forms.Label lblManager;
-        private System.Windows.Forms.ComboBox cmbManager;
         private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.NumericUpDown numStock;
@@ -52,11 +47,6 @@ namespace Restaurante1
             txtId = new TextBox();
             lblName = new Label();
             txtName = new TextBox();
-            lblNameHint = new Label();
-            lblDesc = new Label();
-            txtDesc = new TextBox();
-            lblManager = new Label();
-            cmbManager = new ComboBox();
             lblStock = new Label();
             numStock = new NumericUpDown();
             lblUnit = new Label();
@@ -71,7 +61,6 @@ namespace Restaurante1
             colId = new DataGridViewTextBoxColumn();
             colName = new DataGridViewTextBoxColumn();
             colStock = new DataGridViewTextBoxColumn();
-            colManager = new DataGridViewTextBoxColumn();
             statsPanel = new Panel();
             lblTotalItems = new Label();
             lblLowStock = new Label();
@@ -82,6 +71,9 @@ namespace Restaurante1
             ((System.ComponentModel.ISupportInitialize)gridInventory).BeginInit();
             statsPanel.SuspendLayout();
             SuspendLayout();
+            // 
+            // mainCard
+            // 
             mainCard.BackColor = Color.White;
             mainCard.Controls.Add(lblHeader);
             mainCard.Controls.Add(lblSubHeader);
@@ -89,11 +81,6 @@ namespace Restaurante1
             mainCard.Controls.Add(txtId);
             mainCard.Controls.Add(lblName);
             mainCard.Controls.Add(txtName);
-            mainCard.Controls.Add(lblNameHint);
-            mainCard.Controls.Add(lblDesc);
-            mainCard.Controls.Add(txtDesc);
-            mainCard.Controls.Add(lblManager);
-            mainCard.Controls.Add(cmbManager);
             mainCard.Controls.Add(lblStock);
             mainCard.Controls.Add(numStock);
             mainCard.Controls.Add(lblUnit);
@@ -105,8 +92,11 @@ namespace Restaurante1
             mainCard.Location = new Point(39, 53);
             mainCard.Margin = new Padding(3, 5, 3, 5);
             mainCard.Name = "mainCard";
-            mainCard.Size = new Size(549, 853);
+            mainCard.Size = new Size(569, 853);
             mainCard.TabIndex = 0;
+            // 
+            // lblHeader
+            // 
             lblHeader.AutoSize = true;
             lblHeader.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblHeader.ForeColor = Color.FromArgb(50, 50, 50);
@@ -115,6 +105,9 @@ namespace Restaurante1
             lblHeader.Size = new Size(399, 31);
             lblHeader.TabIndex = 0;
             lblHeader.Text = "Gestión de Inventario - Ingredientes";
+            // 
+            // lblSubHeader
+            // 
             lblSubHeader.AutoSize = true;
             lblSubHeader.Font = new Font("Segoe UI", 10F);
             lblSubHeader.ForeColor = Color.Gray;
@@ -123,6 +116,9 @@ namespace Restaurante1
             lblSubHeader.Size = new Size(296, 23);
             lblSubHeader.TabIndex = 1;
             lblSubHeader.Text = "Registro y control de insumos básicos";
+            // 
+            // lblId
+            // 
             lblId.AutoSize = true;
             lblId.Font = new Font("Segoe UI", 10F);
             lblId.ForeColor = Color.FromArgb(50, 50, 50);
@@ -131,6 +127,9 @@ namespace Restaurante1
             lblId.Size = new Size(113, 23);
             lblId.TabIndex = 2;
             lblId.Text = "ID Inventario:";
+            // 
+            // txtId
+            // 
             txtId.BackColor = Color.WhiteSmoke;
             txtId.BorderStyle = BorderStyle.FixedSingle;
             txtId.Font = new Font("Segoe UI", 10F);
@@ -141,6 +140,9 @@ namespace Restaurante1
             txtId.Size = new Size(325, 30);
             txtId.TabIndex = 3;
             txtId.Text = "0000";
+            // 
+            // lblName
+            // 
             lblName.AutoSize = true;
             lblName.Font = new Font("Segoe UI", 10F);
             lblName.ForeColor = Color.FromArgb(50, 50, 50);
@@ -149,6 +151,9 @@ namespace Restaurante1
             lblName.Size = new Size(77, 23);
             lblName.TabIndex = 4;
             lblName.Text = "Nombre:";
+            // 
+            // txtName
+            // 
             txtName.BackColor = Color.WhiteSmoke;
             txtName.BorderStyle = BorderStyle.FixedSingle;
             txtName.Font = new Font("Segoe UI", 10F);
@@ -157,71 +162,46 @@ namespace Restaurante1
             txtName.Name = "txtName";
             txtName.Size = new Size(325, 30);
             txtName.TabIndex = 5;
-            lblNameHint.AutoSize = true;
-            lblNameHint.Font = new Font("Segoe UI", 9F);
-            lblNameHint.ForeColor = Color.Gray;
-            lblNameHint.Location = new Point(195, 263);
-            lblNameHint.Name = "lblNameHint";
-            lblNameHint.Size = new Size(230, 20);
-            lblNameHint.TabIndex = 6;
-            lblNameHint.Text = "ej: Sal, Aceite de Oliva, Pimienta...";
-            lblDesc.AutoSize = true;
-            lblDesc.Font = new Font("Segoe UI", 10F);
-            lblDesc.ForeColor = Color.FromArgb(50, 50, 50);
-            lblDesc.Location = new Point(26, 284);
-            lblDesc.Name = "lblDesc";
-            lblDesc.Size = new Size(102, 23);
-            lblDesc.TabIndex = 7;
-            lblDesc.Text = "Descripción:";
-            txtDesc.BackColor = Color.WhiteSmoke;
-            txtDesc.BorderStyle = BorderStyle.FixedSingle;
-            txtDesc.Font = new Font("Segoe UI", 10F);
-            txtDesc.Location = new Point(195, 284);
-            txtDesc.Margin = new Padding(3, 5, 3, 5);
-            txtDesc.Multiline = true;
-            txtDesc.Name = "txtDesc";
-            txtDesc.Size = new Size(325, 105);
-            txtDesc.TabIndex = 8;
-            lblManager.AutoSize = true;
-            lblManager.Font = new Font("Segoe UI", 10F);
-            lblManager.ForeColor = Color.FromArgb(50, 50, 50);
-            lblManager.Location = new Point(26, 409);
-            lblManager.Name = "lblManager";
-            lblManager.Size = new Size(95, 23);
-            lblManager.TabIndex = 9;
-            lblManager.Text = "Encargado:";
-            cmbManager.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbManager.Items.AddRange(new object[] { "Alma", "Juan", "Pedro", "Maria" });
-            cmbManager.Location = new Point(195, 409);
-            cmbManager.Margin = new Padding(3, 5, 3, 5);
-            cmbManager.Name = "cmbManager";
-            cmbManager.Size = new Size(325, 28);
-            cmbManager.TabIndex = 10;
+            // 
+            // lblStock
+            // 
             lblStock.AutoSize = true;
             lblStock.Font = new Font("Segoe UI", 10F);
             lblStock.ForeColor = Color.FromArgb(50, 50, 50);
             lblStock.Location = new Point(26, 489);
             lblStock.Name = "lblStock";
-            lblStock.Size = new Size(152, 23);
+            lblStock.Size = new Size(189, 23);
             lblStock.TabIndex = 11;
-            lblStock.Text = "Cantidad en Stock:";
+            lblStock.Text = "Cantidad en Inventario:";
+            // 
+            // numStock
+            // 
             numStock.DecimalPlaces = 1;
             numStock.Location = new Point(287, 489);
             numStock.Margin = new Padding(3, 5, 3, 5);
             numStock.Name = "numStock";
             numStock.Size = new Size(104, 27);
             numStock.TabIndex = 12;
+            // 
+            // lblUnit
+            // 
             lblUnit.AutoSize = true;
             lblUnit.Location = new Point(405, 489);
             lblUnit.Name = "lblUnit";
             lblUnit.Size = new Size(47, 20);
             lblUnit.TabIndex = 13;
             lblUnit.Text = "kg / u";
+            // 
+            // progressBar
+            // 
             progressBar.Location = new Point(26, 551);
             progressBar.Margin = new Padding(3, 5, 3, 5);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(496, 27);
             progressBar.TabIndex = 14;
+            // 
+            // btnSave
+            // 
             btnSave.BackColor = Color.FromArgb(76, 175, 80);
             btnSave.Cursor = Cursors.Hand;
             btnSave.FlatAppearance.BorderSize = 0;
@@ -229,9 +209,14 @@ namespace Restaurante1
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(26, 613);
+            btnSave.Name = "btnSave";
             btnSave.Size = new Size(130, 40);
+            btnSave.TabIndex = 15;
             btnSave.Text = "Guardar";
             btnSave.UseVisualStyleBackColor = false;
+            // 
+            // btnUpdate
+            // 
             btnUpdate.BackColor = Color.FromArgb(33, 150, 243);
             btnUpdate.Cursor = Cursors.Hand;
             btnUpdate.FlatAppearance.BorderSize = 0;
@@ -239,9 +224,14 @@ namespace Restaurante1
             btnUpdate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.White;
             btnUpdate.Location = new Point(162, 613);
+            btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(130, 40);
+            btnUpdate.TabIndex = 16;
             btnUpdate.Text = "Actualizar";
             btnUpdate.UseVisualStyleBackColor = false;
+            // 
+            // btnDelete
+            // 
             btnDelete.BackColor = Color.FromArgb(244, 67, 54);
             btnDelete.Cursor = Cursors.Hand;
             btnDelete.FlatAppearance.BorderSize = 0;
@@ -249,10 +239,15 @@ namespace Restaurante1
             btnDelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
             btnDelete.Location = new Point(298, 613);
+            btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(130, 40);
+            btnDelete.TabIndex = 17;
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += BtnDelete_Click;
+            // 
+            // btnExport
+            // 
             btnExport.BackColor = Color.FromArgb(158, 158, 158);
             btnExport.Cursor = Cursors.Hand;
             btnExport.FlatAppearance.BorderSize = 0;
@@ -260,10 +255,15 @@ namespace Restaurante1
             btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnExport.ForeColor = Color.White;
             btnExport.Location = new Point(434, 613);
+            btnExport.Name = "btnExport";
             btnExport.Size = new Size(130, 40);
+            btnExport.TabIndex = 18;
             btnExport.Text = "Exportar";
             btnExport.UseVisualStyleBackColor = false;
             btnExport.Click += BtnExport_Click;
+            // 
+            // rightPanel
+            // 
             rightPanel.BackColor = Color.White;
             rightPanel.Controls.Add(lblHeaderGrid);
             rightPanel.Controls.Add(gridInventory);
@@ -272,6 +272,9 @@ namespace Restaurante1
             rightPanel.Name = "rightPanel";
             rightPanel.Size = new Size(522, 853);
             rightPanel.TabIndex = 1;
+            // 
+            // lblHeaderGrid
+            // 
             lblHeaderGrid.AutoSize = true;
             lblHeaderGrid.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblHeaderGrid.ForeColor = Color.FromArgb(50, 50, 50);
@@ -280,6 +283,9 @@ namespace Restaurante1
             lblHeaderGrid.Size = new Size(247, 28);
             lblHeaderGrid.TabIndex = 0;
             lblHeaderGrid.Text = "Ingredientes Registrados";
+            // 
+            // gridInventory
+            // 
             gridInventory.AllowUserToAddRows = false;
             gridInventory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridInventory.BackgroundColor = Color.White;
@@ -287,7 +293,7 @@ namespace Restaurante1
             gridInventory.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             gridInventory.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             gridInventory.ColumnHeadersHeight = 29;
-            gridInventory.Columns.AddRange(new DataGridViewColumn[] { colId, colName, colStock, colManager });
+            gridInventory.Columns.AddRange(new DataGridViewColumn[] { colId, colName, colStock });
             gridInventory.EnableHeadersVisualStyles = false;
             gridInventory.Location = new Point(26, 107);
             gridInventory.Margin = new Padding(3, 5, 3, 5);
@@ -299,26 +305,33 @@ namespace Restaurante1
             gridInventory.Size = new Size(470, 711);
             gridInventory.TabIndex = 1;
             gridInventory.CellClick += GridInventory_CellClick;
+            // 
+            // colId
+            // 
             colId.FillWeight = 25F;
             colId.HeaderText = "ID";
             colId.MinimumWidth = 6;
             colId.Name = "colId";
             colId.ReadOnly = true;
+            // 
+            // colName
+            // 
             colName.FillWeight = 50F;
             colName.HeaderText = "Nombre";
             colName.MinimumWidth = 6;
             colName.Name = "colName";
             colName.ReadOnly = true;
+            // 
+            // colStock
+            // 
             colStock.FillWeight = 20F;
             colStock.HeaderText = "Stock";
             colStock.MinimumWidth = 6;
             colStock.Name = "colStock";
             colStock.ReadOnly = true;
-            colManager.FillWeight = 30F;
-            colManager.HeaderText = "Encargado";
-            colManager.MinimumWidth = 6;
-            colManager.Name = "colManager";
-            colManager.ReadOnly = true;
+            // 
+            // statsPanel
+            // 
             statsPanel.BackColor = Color.White;
             statsPanel.Controls.Add(lblTotalItems);
             statsPanel.Controls.Add(lblLowStock);
@@ -328,6 +341,9 @@ namespace Restaurante1
             statsPanel.Name = "statsPanel";
             statsPanel.Size = new Size(1097, 107);
             statsPanel.TabIndex = 2;
+            // 
+            // lblTotalItems
+            // 
             lblTotalItems.AutoSize = true;
             lblTotalItems.Font = new Font("Segoe UI", 9F);
             lblTotalItems.ForeColor = Color.FromArgb(50, 50, 50);
@@ -336,6 +352,9 @@ namespace Restaurante1
             lblTotalItems.Size = new Size(143, 20);
             lblTotalItems.TabIndex = 0;
             lblTotalItems.Text = "Total Ingredientes: 0";
+            // 
+            // lblLowStock
+            // 
             lblLowStock.AutoSize = true;
             lblLowStock.Font = new Font("Segoe UI", 9F);
             lblLowStock.ForeColor = Color.FromArgb(255, 193, 7);
@@ -344,6 +363,9 @@ namespace Restaurante1
             lblLowStock.Size = new Size(211, 20);
             lblLowStock.TabIndex = 1;
             lblLowStock.Text = "⚠ Bajo Stock (<10%): 0 items";
+            // 
+            // lblLastUpdate
+            // 
             lblLastUpdate.AutoSize = true;
             lblLastUpdate.Font = new Font("Segoe UI", 9F);
             lblLastUpdate.ForeColor = Color.Gray;
@@ -352,6 +374,9 @@ namespace Restaurante1
             lblLastUpdate.Size = new Size(196, 20);
             lblLastUpdate.TabIndex = 2;
             lblLastUpdate.Text = "🕒 Último Actualizado: Hoy";
+            // 
+            // frmInventario
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1176, 1055);
@@ -371,11 +396,9 @@ namespace Restaurante1
             statsPanel.ResumeLayout(false);
             statsPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colStock;
-        private DataGridViewTextBoxColumn colManager;
     }
 }

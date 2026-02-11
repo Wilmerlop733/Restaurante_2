@@ -159,7 +159,7 @@ namespace Restaurante1
             lblName.ForeColor = Color.FromArgb(50, 50, 50);
             lblName.Location = new Point(26, 320);
             lblName.Name = "lblName";
-            lblName.Size = new Size(130, 41);
+            lblName.Size = new Size(163, 41);
             lblName.TabIndex = 5;
             lblName.Text = "Nombre del Plato:";
             // 

@@ -16,8 +16,11 @@ namespace Restaurante1.Services
 
         public static readonly Font HeaderFont = new Font("Segoe UI", 18, FontStyle.Bold);
         public static readonly Font SubHeaderFont = new Font("Segoe UI", 12, FontStyle.Bold);
+        public static readonly Font TitleFont = new Font("Segoe UI", 14, FontStyle.Bold);
         public static readonly Font RegularFont = new Font("Segoe UI", 10, FontStyle.Regular);
         public static readonly Font SmallFont = new Font("Segoe UI", 9, FontStyle.Regular);
+        public static readonly Font LabelFont = new Font("Segoe UI", 10, FontStyle.Regular);
+        public static readonly Font ButtonFont = new Font("Segoe UI", 10, FontStyle.Bold);
 
         public static void StyleButton(Button btn, Color backColor)
         {
@@ -41,6 +44,59 @@ namespace Restaurante1.Services
         {
             lbl.Font = font;
             lbl.ForeColor = color;
+        }
+
+        public static void ApplyStandardFonts(Form form)
+        {
+            // Apply standard fonts to all controls recursively
+            foreach (Control control in form.Controls)
+            {
+                ApplyFontsToControl(control);
+            }
+        }
+
+        private static void ApplyFontsToControl(Control control)
+        {
+            if (control is Label lbl)
+            {
+                // Title labels (in headers)
+                if (lbl.Parent is Panel panel && panel.Dock == DockStyle.Top)
+                {
+                    lbl.Font = HeaderFont;
+                }
+                // Regular labels
+                else if (lbl.Font.Size < 12)
+                {
+                    lbl.Font = LabelFont;
+                }
+            }
+            else if (control is Button btn)
+            {
+                btn.Font = ButtonFont;
+            }
+            else if (control is TextBox txt)
+            {
+                txt.Font = RegularFont;
+            }
+            else if (control is ComboBox cmb)
+            {
+                cmb.Font = RegularFont;
+            }
+            else if (control is NumericUpDown num)
+            {
+                num.Font = RegularFont;
+            }
+            else if (control is DataGridView grid)
+            {
+                grid.Font = RegularFont;
+                grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            }
+
+            // Recursively apply to child controls
+            foreach (Control child in control.Controls)
+            {
+                ApplyFontsToControl(child);
+            }
         }
     }
 }

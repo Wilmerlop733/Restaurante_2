@@ -18,8 +18,6 @@ namespace Restaurante1
                 ApplyStyles();
                 LoadInventoryData();
 
-                if (this.cmbManager.Items.Count > 0) this.cmbManager.SelectedIndex = 0;
-
                 this.btnSave.Click += BtnSave_Click;
                 this.btnUpdate.Click += BtnUpdate_Click;
             }
@@ -38,17 +36,26 @@ namespace Restaurante1
         {
             try
             {
-                // Verificamos si la columna existe
-                DataTable schema = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'stock'");
+                // Verificamos si la columna 'inventario' existe
+                DataTable schema = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'inventario'");
                 if (schema.Rows.Count == 0)
                 {
-                    // Si no existe, la creamos
-                    DatabaseHelper.ExecuteNonQuery("ALTER TABLE ingredientes ADD COLUMN stock DECIMAL(10,2) DEFAULT 0 AFTER encargadoingre");
+                    // Si no existe 'inventario', verificamos si existe 'stock' para renombrarlo
+                    DataTable schemaOld = DatabaseHelper.ExecuteQuery("SHOW COLUMNS FROM ingredientes LIKE 'stock'");
+                    if (schemaOld.Rows.Count > 0)
+                    {
+                        DatabaseHelper.ExecuteNonQuery("ALTER TABLE ingredientes CHANGE COLUMN stock inventario DECIMAL(10,2) DEFAULT 0");
+                    }
+                    else
+                    {
+                        // Si ninguno existe (tabla nueva según el usuario), nos aseguramos que la tabla tenga la estructura correcta
+                        // Nota: El usuario ya proporcionó el script de creación, pero esto ayuda a la robustez.
+                        DatabaseHelper.ExecuteNonQuery("ALTER TABLE ingredientes ADD COLUMN inventario DECIMAL(10,2) DEFAULT 0");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                // Solo registramos en consola si falla, para no interrumpir al usuario si ya existe por alguna razón
                 Console.WriteLine("Error al verificar/actualizar esquema de base de datos: " + ex.Message);
             }
         }
@@ -66,23 +73,22 @@ namespace Restaurante1
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    decimal stock = 0;
-                    if (dt.Columns.Contains("stock"))
+                    decimal inventario = 0;
+                    if (dt.Columns.Contains("inventario"))
                     {
-                        var stockVal = row["stock"];
-                        stock = (stockVal == DBNull.Value) ? 0 : Convert.ToDecimal(stockVal);
+                        var invVal = row["inventario"];
+                        inventario = (invVal == DBNull.Value) ? 0 : Convert.ToDecimal(invVal);
                     }
 
-                    if (stock < 10) lowStockCount++;
+                    if (inventario < 10) lowStockCount++;
 
                     string id = "0000";
                     if (dt.Columns.Contains("idingredientes"))
                         id = Convert.ToInt32(row["idingredientes"]).ToString("D4");
 
                     string nombre = row.Table.Columns.Contains("nombreingre") ? row["nombreingre"].ToString() : "N/A";
-                    string encargado = row.Table.Columns.Contains("encargadoingre") ? row["encargadoingre"].ToString() : "Admin";
 
-                    gridInventory.Rows.Add(id, nombre, stock.ToString("N1"), encargado);
+                    gridInventory.Rows.Add(id, nombre, inventario.ToString("N1"), "General");
                 }
 
                 if (lblTotalItems != null) lblTotalItems.Text = $"Total Ingredientes: {dt.Rows.Count}";
@@ -111,22 +117,20 @@ namespace Restaurante1
                     DataRow row = dt.Rows[0];
                     txtId.Text = "ING-" + idStr;
                     txtName.Text = row["nombreingre"].ToString();
-                    txtDesc.Text = row["descipcioningre"].ToString();
-                    cmbManager.SelectedItem = row["encargadoingre"].ToString();
                     
-                    decimal stock = 0;
-                    if (dt.Columns.Contains("stock"))
+                    decimal inventario = 0;
+                    if (dt.Columns.Contains("inventario"))
                     {
-                        stock = Convert.ToDecimal(row["stock"] == DBNull.Value ? 0 : row["stock"]);
+                        inventario = Convert.ToDecimal(row["inventario"] == DBNull.Value ? 0 : row["inventario"]);
                     }
-                    numStock.Value = stock;
+                    numStock.Value = inventario;
                     
-                    if (stock < 10)
+                    if (inventario < 10)
                         progressBar.ForeColor = Color.Red;
                     else
                         progressBar.ForeColor = StyleHelper.SecondaryColor;
                         
-                    progressBar.Value = (int)Math.Min(100, stock);
+                    progressBar.Value = (int)Math.Min(100, inventario);
                 }
             }
         }
@@ -136,28 +140,6 @@ namespace Restaurante1
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 MessageBox.Show("Por favor ingrese el nombre del ingrediente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (txtName.Text.Length > 100)
-            {
-                MessageBox.Show("El nombre del ingrediente es demasiado largo (máximo 100 caracteres).", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            bool tieneNumeros = false;
-            foreach (char caracter in txtName.Text)
-            {
-                if (char.IsDigit(caracter))
-                {
-                    tieneNumeros = true;
-                    break;
-                }
-            }
-
-            if (tieneNumeros)
-            {
-                MessageBox.Show("El nombre del ingrediente no puede contener números.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -176,13 +158,11 @@ namespace Restaurante1
 
             try
             {
-                string query = "INSERT INTO ingredientes (nombreingre, descipcioningre, encargadoingre, stock) VALUES (@nom, @desc, @enc, @stock)";
+                string query = "INSERT INTO ingredientes (nombreingre, inventario) VALUES (@nom, @inv)";
 
                 MySqlParameter[] parameters = {
                     new MySqlParameter("@nom", txtName.Text),
-                    new MySqlParameter("@desc", txtDesc.Text),
-                    new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
-                    new MySqlParameter("@stock", numStock.Value)
+                    new MySqlParameter("@inv", numStock.Value)
                 };
 
                 if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
@@ -208,22 +188,6 @@ namespace Restaurante1
                 return;
             }
 
-            bool tieneNumeros = false;
-            foreach (char letra in txtName.Text)
-            {
-                if (char.IsDigit(letra))
-                {
-                    tieneNumeros = true;
-                    break;
-                }
-            }
-
-            if (tieneNumeros)
-            {
-                MessageBox.Show("El nombre del ingrediente no puede contener números.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             try
             {
                 string idStr = txtId.Text.Replace("ING-", "");
@@ -244,13 +208,11 @@ namespace Restaurante1
             try
             {
                 string idPart = txtId.Text.Replace("ING-", "");
-                string query = "UPDATE ingredientes SET nombreingre=@nom, descipcioningre=@desc, encargadoingre=@enc, stock=@stock WHERE idingredientes=@id";
+                string query = "UPDATE ingredientes SET nombreingre=@nom, inventario=@inv WHERE idingredientes=@id";
 
                 MySqlParameter[] parameters = {
                     new MySqlParameter("@nom", txtName.Text),
-                    new MySqlParameter("@desc", txtDesc.Text),
-                    new MySqlParameter("@enc", cmbManager.SelectedItem?.ToString() ?? "Admin"),
-                    new MySqlParameter("@stock", numStock.Value),
+                    new MySqlParameter("@inv", numStock.Value),
                     new MySqlParameter("@id", int.Parse(idPart))
                 };
 
@@ -320,7 +282,7 @@ namespace Restaurante1
                         html.AppendLine("<table>");
                         
                         // Encabezados
-                        html.AppendLine("<thead><tr><th>ID</th><th>Nombre</th><th>Stock (U/kg)</th><th>Encargado</th></tr></thead>");
+                        html.AppendLine("<thead><tr><th>ID</th><th>Nombre</th><th>Inventario (U/kg)</th></tr></thead>");
 
                         // Datos
                         html.AppendLine("<tbody>");
@@ -332,7 +294,6 @@ namespace Restaurante1
                                 html.AppendLine("  <td>" + (row.Cells["colId"].Value?.ToString() ?? "") + "</td>");
                                 html.AppendLine("  <td>" + (row.Cells["colName"].Value?.ToString() ?? "") + "</td>");
                                 html.AppendLine("  <td>" + (row.Cells["colStock"].Value?.ToString() ?? "0") + "</td>");
-                                html.AppendLine("  <td>" + (row.Cells["colManager"].Value?.ToString() ?? "") + "</td>");
                                 html.AppendLine("</tr>");
                             }
                         }
@@ -355,8 +316,6 @@ namespace Restaurante1
         {
             txtId.Text = "0000";
             txtName.Clear();
-            txtDesc.Clear();
-            if (cmbManager.Items.Count > 0) cmbManager.SelectedIndex = 0;
             numStock.Value = 0;
             progressBar.Value = 0;
         }

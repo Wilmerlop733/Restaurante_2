@@ -51,6 +51,12 @@ namespace Restaurante1
             lblTitle.Text = "Sistema de Gestión - Registro de Platos";
         }
 
+        private void btnNavRecipes_Click(object sender, EventArgs e)
+        {
+            OpenFormInPanel(new frmRecetas());
+            lblTitle.Text = "Sistema de Gestión - Recetas de Cocina";
+        }
+
         private void pnlContent_Paint(object sender, PaintEventArgs e)
         {
         }
